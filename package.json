@@ -1,0 +1,23 @@
+{
+  "name": "smart_nx_qa_junior_joaovitorpureza",
+  "version": "1.0.0",
+  "description": "Repository for a Technical Challenge to Smart NX hiring exam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThePureza/Smart_NX_QA_JUNIOR_JoaoVitorPureza.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThePureza/Smart_NX_QA_JUNIOR_JoaoVitorPureza/issues"
+  },
+  "homepage": "https://github.com/ThePureza/Smart_NX_QA_JUNIOR_JoaoVitorPureza#readme",
+  "dependencies": {
+    "cypress": "^14.3.3"
+  }
+}
