@@ -1,0 +1,94 @@
+Baseando-se na seguinte história de usuário:
+
+Título: Gravação e Envio de Áudio pelo Operador na Tela de Atendimento
+
+Descrição:
+Como operador da Smart Nx, desejo gravar e enviar áudios diretamente pela tela de 
+atendimento, no formato compatível com o WhatsApp, para melhorar a comunicação 
+com o cliente e garantir uma experiência fluida e satisfatória.
+
+Critérios de aceitação:
+
+1. Gravação do Áudio
+    ● O operador deve visualizar um botão de gravação com o ícone de 
+    microfone na tela de atendimento.
+    ● Ao clicar no botão de gravação, o sistema deve:
+        ○ Solicitar permissão para acessar o microfone, caso ainda não tenha sido 
+    concedida.
+        ○ Iniciar a gravação e exibir um indicador de tempo decorrido.
+
+1. Pré-visualização e Ações
+    ● Após finalizar a gravação, o operador deve poder:
+        ○ Ouvir o áudio gravado (pré-visualização).
+        ○ Escolher entre enviar, regravar ou cancelar o áudio.
+
+Exemplo de Cenário de Teste com Gherkin:
+    Cenário: Exibição do ícone de microfone na tela de atendimento 
+        Dado que o operador está conectado ao sistema
+        E que um atendimento foi direcionado para o operador 
+        Quando o operador abrir o atendimento
+        Então o ícone de microfone deve ser exibido na tela de atendimento
+
+-----------------------------------------------------Cenários de Testes-----------------------------------------------------
+
+Cenário: Solicitação para acessar o microfone do operador negada
+    Dado que o operador está conectado ao sistema
+    E que o atendimento está aberto
+    Quando o operador clicar no ícone de microfone
+    Então o sistema irá solicitar a permissão do operador para acessar o microfone caso ainda não tenha sido concedida
+    E com o operador não concedendo a permissão
+    E não iniciará a gravação do áudio
+
+Cenário: Iniciar a gravação com solicitação para acessar o microfone do operador concedida
+    Dado que o operador está conectado ao sistema
+    E que o atendimento está aberto
+    Quando o operador clicar no ícone de microfone
+    Então o sistema irá solicitar a permissão do operador para acessar o microfone caso ainda não tenha sido concedida
+    E com o operador concedendo a permissão
+    E iniciará a gravação do áudio captado pelo microfone do operador
+    E exibirá um indicador com o tempo decorrido da gravação
+
+Cenário: Iniciar a gravação sem solicitar para acessar o microfone do operador
+    Dado que o operador está conectado ao sistema
+    E que um atendimento foi direcionado para o Operador
+    E que o atendimento esteja aberto
+    E que o Operador já tenha concedido a permissão de gravação do microfone para o sistema
+    Quando o Operador clicar no ícone de microfone
+    Então o sistema iniciára a gravação do áudio captado pelo microfone do operador
+    E exibirá um indicador com o tempo decorrido da gravação
+
+Cenário: Visualização após a gravação de um áudio
+    Dado que o operado está conectado ao sistema
+    E que está com um atendimento aberto
+    E que o Operador tenha clicado no ícone de microfone para iniciar uma gravação de áudio
+    Quando o operador finalizar a gravação do áudio
+    Então o sistema mostrará uma Pré-visualização do áudio gravado
+    E apresentará 3 botões, Enviar, Regravar e Cancelar o Áudio
+
+Cenário: Escutar o áudio gravado
+    Dado que o operado está conectado ao sistema
+    E que está com um atendimento aberto
+    E que o Operador tenha finalizado a gravação do áudio
+    Quando o Operador selecionar a Pré-visualização do áudio gravado
+    Então o sistema deve executar o áudio gravado
+
+Cenário: Regravar o áudio
+    Dado que o operado está conectado ao sistema
+    E que está com um atendimento aberto
+    E que o Operador tenha finalizado a gravação do áudio
+    Quando o Operador clicar no botão Regravar
+    Então o sistema deletará o áudio já gravado e iniciará uma nova gravação de áudio
+
+Cenário: Cancelar o áudio
+    Dado que o operado está conectado ao sistema
+    E que está com um atendimento aberto
+    E que o Operador tenha finalizado a gravação do áudio
+    Quando o Operador clicar no botão Cancelar o Áudio
+    Então o sistema deve deletar o áudio gravado e retornar o Operador para a caixa de mensagem
+
+Cenário: Enviar o áudio
+    Dado que o operado está conectado ao sistema
+    E que está com um atendimento aberto
+    E que o Operador tenha finalizado a gravação do áudio
+    Quando o Operador clicar no Botão enviar
+    Então o sistema deve enviar o áudio gravado para o cliente do atendimento que está aberto
