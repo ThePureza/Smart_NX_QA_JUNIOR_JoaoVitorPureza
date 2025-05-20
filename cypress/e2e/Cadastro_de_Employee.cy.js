@@ -66,6 +66,7 @@ after(() => {
     cy.get('ul.oxd-main-menu').find('li').click()
     cy.get(':nth-child(2) > .oxd-input').type('2305')
     cy.get('.oxd-form-actions > .oxd-button--secondary').click()
+    cy.wait(2000)
     cy.get('.oxd-table-cell-actions > :nth-child(2) > .oxd-icon').click()
     cy.get('.oxd-button--label-danger').click()
 })
