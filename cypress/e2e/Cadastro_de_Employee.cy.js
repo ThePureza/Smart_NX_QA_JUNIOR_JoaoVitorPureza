@@ -1,0 +1,71 @@
+/// <reference types="cypress" />
+
+it ('1. Validar a existência do botão “+ Add”', function () {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.get('[name="username"]').type('Admin')
+    cy.get('[name="password"]').type('admin123')
+    cy.get('.orangehrm-login-button').click()
+    cy.get('.oxd-main-menu-search > .oxd-input').type('PIM')
+    cy.get('ul.oxd-main-menu').find('li').click()
+    cy.get('.orangehrm-header-container > .oxd-button').should('contains.text', 'Add')
+})
+
+it ('2. Acessar a tela de cadastro de usuário clicando no botão “+ Add”', function() {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.get('[name="username"]').type('Admin')
+    cy.get('[name="password"]').type('admin123')
+    cy.get('.orangehrm-login-button').click()
+    cy.get('.oxd-main-menu-search > .oxd-input').type('PIM')
+    cy.get('ul.oxd-main-menu').find('li').click()
+    cy.get('.orangehrm-header-container > .oxd-button').click()
+    cy.get('.orangehrm-card-container > .oxd-text--h6').should('have.text', 'Add Employee')
+})
+
+it ('3. Tentar cadastrar um usuário sem preencher o nome', function() {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.get('[name="username"]').type('Admin')
+    cy.get('[name="password"]').type('admin123')
+    cy.get('.orangehrm-login-button').click()
+    cy.get('.oxd-main-menu-search > .oxd-input').type('PIM')
+    cy.get('ul.oxd-main-menu').find('li').click()
+    cy.get('.orangehrm-header-container > .oxd-button').click()
+    cy.get('.oxd-button--secondary').click()
+    cy.get('.--name-grouped-field > :nth-child(1)').find('.oxd-text').should('have.text', 'Required')
+    cy.get('.--name-grouped-field > :nth-child(3)').find('.oxd-text').should('have.text', 'Required')
+})
+
+it ('4. Validar tentativa de cadastro com “Employee ID” já existente', function() {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.get('[name="username"]').type('Admin')
+    cy.get('[name="password"]').type('admin123')
+    cy.get('.orangehrm-login-button').click()
+    cy.get('.oxd-main-menu-search > .oxd-input').type('PIM')
+    cy.get('ul.oxd-main-menu').find('li').click()
+    cy.get('.orangehrm-header-container > .oxd-button').click()
+    cy.get('.oxd-grid-2 > .oxd-grid-item > .oxd-input-group').find('.oxd-input').clear().type('0312')
+    cy.get('.oxd-grid-2 > .oxd-grid-item > .oxd-input-group').find('.oxd-text').should('have.text', 'Employee Id already exists')
+})
+
+it ('5. Cadastrar um employee sem dados de login', function() {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.get('[name="username"]').type('Admin')
+    cy.get('[name="password"]').type('admin123')
+    cy.get('.orangehrm-login-button').click()
+    cy.get('.oxd-main-menu-search > .oxd-input').type('PIM')
+    cy.get('ul.oxd-main-menu').find('li').click()
+    cy.get('.orangehrm-header-container > .oxd-button').click()
+    cy.get('.--name-grouped-field > :nth-child(1)').find('.oxd-input').type('Teste')
+    cy.get('.--name-grouped-field > :nth-child(3)').find('.oxd-input').type('Pureza')
+    cy.get('.oxd-grid-2 > .oxd-grid-item > .oxd-input-group').find('.oxd-input').clear().type('2305')
+    cy.get('.oxd-button--secondary').click()
+    cy.get('.orangehrm-edit-employee-name > .oxd-text').should('have.text', "Teste Pureza")
+})
+
+after(() => {
+    cy.get('.oxd-main-menu-search > .oxd-input').type('PIM')
+    cy.get('ul.oxd-main-menu').find('li').click()
+    cy.get(':nth-child(2) > .oxd-input').type('2305')
+    cy.get('.oxd-form-actions > .oxd-button--secondary').click()
+    cy.get('.oxd-table-cell-actions > :nth-child(2) > .oxd-icon').click()
+    cy.get('.oxd-button--label-danger').click()
+})
